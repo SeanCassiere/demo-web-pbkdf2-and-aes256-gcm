@@ -10,7 +10,6 @@ if (!app) {
 
 document.addEventListener("DOMContentLoaded", () => {
   app.innerHTML = `
-    <h1 class="text-2xl font-medium">Web Crypto Tests</h1>
-    <p>👋</p>
+    <h1 class="text-2xl font-medium">Web Crypto Tests 🔐</h1>
   `;
 });

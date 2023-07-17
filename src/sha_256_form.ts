@@ -16,7 +16,6 @@ if (!sha256Form || !formInput || !formOutput) {
 
 // function that takes a string and returns a sha256 hash
 // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-// https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#converting_a_digest_to_a_hex_string
 async function sha256(message: string) {
   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
