@@ -44,21 +44,6 @@
       <section class="py-3.5">
         <h2 class="pb-2 text-xl">PBKDK2 Encryption</h2>
         <form id="pbkdf2-enc" class="flex flex-col gap-2">
-          <!-- <span class="">Success!</span> -->
-          <div
-            id="pbkdf2-enc-info"
-            class="items-center rounded-lg bg-blue-200 px-3 py-2 text-sm font-medium leading-4 text-blue-800"
-            style="display: none"
-          >
-            <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v5h-2v-5zm0-3h2v2h-2V6z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <span id="pbkdf2-enc-message">Information</span>
-          </div>
           <div class="flex gap-2">
             <div class="flex w-full flex-col">
               <label for="pbkdf2-enc-password">Enc. Password</label>
@@ -66,7 +51,7 @@
                 type="text"
                 name="password"
                 id="pbkdf2-enc-password"
-                value="sean"
+                value="@Password1"
                 required
                 placeholder="Password"
               />
@@ -77,7 +62,7 @@
                 type="number"
                 name="rounds"
                 id="pbkdf2-enc-rounds"
-                value="100000"
+                value="600000"
                 min="0"
                 step="100000"
                 placeholder="Rounds"
@@ -87,7 +72,7 @@
           <div>
             <label for="pbkdf2-enc-data">Raw data</label>
             <textarea id="pbkdf2-enc-data" name="data" class="h-16 w-full">
-{}</textarea
+{"foo":"bar"}</textarea
             >
           </div>
           <button
@@ -97,9 +82,18 @@
             Encrypt
           </button>
           <div>
-            <label for="pbkdf2-enc-output">Encrypted output</label>
+            <label for="pbkdf2-enc-output-data">Encrypted output</label>
             <textarea
-              id="pbkdf2-enc-output"
+              id="pbkdf2-enc-output-data"
+              name="data"
+              class="h-16 w-full"
+              readonly
+            ></textarea>
+          </div>
+          <div>
+            <label for="pbkdf2-enc-output-salt">Encryption salt</label>
+            <textarea
+              id="pbkdf2-enc-output-salt"
               name="data"
               class="h-16 w-full"
               readonly
@@ -112,47 +106,49 @@
       <section class="py-3.5">
         <h2 class="pb-2 text-xl">PBKDK2 Decryption</h2>
         <form id="pbkdf2-dec" class="flex flex-col gap-2">
-          <div
-            id="pbkdf2-dec-info"
-            class="items-center rounded-lg bg-blue-200 px-3 py-2 text-sm font-medium leading-4 text-blue-800"
-            style="display: none"
-          >
-            <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v5h-2v-5zm0-3h2v2h-2V6z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <span id="pbkdf2-dec-message">Information</span>
-          </div>
           <div>
-            <label for="pbkdf2-dec-data">Encrypted input</label>
-            <textarea id="pbkdf2-dec-data" name="data" class="h-16 w-full">
+            <label for="pbkdf2-dec-cipher-input">Decryption cyphertext</label>
+            <textarea
+              id="pbkdf2-dec-cipher-input"
+              name="data"
+              class="h-16 w-full"
+              required
+            >
 {}</textarea
             >
           </div>
+          <div>
+            <label for="pbkdf2-dec-salt-input">Decryption salt</label>
+            <textarea
+              id="pbkdf2-dec-salt-input"
+              name="data"
+              class="h-16 w-full"
+              required
+            ></textarea>
+          </div>
           <div class="flex gap-2">
             <div class="flex w-full flex-col">
-              <label for="pbkdf2-dec-password">Dec. Password</label>
+              <label for="pbkdf2-dec-password-input">Password</label>
               <input
                 type="text"
                 name="password"
-                id="pbkdf2-dec-password"
-                value="sean"
+                id="pbkdf2-dec-password-input"
+                value="@Password1"
                 placeholder="Password"
+                required
               />
             </div>
             <div class="flex w-full flex-col">
-              <label for="pbkdf2-dec-rounds">Rounds</label>
+              <label for="pbkdf2-dec-rounds-input">Rounds</label>
               <input
                 type="number"
                 name="rounds"
-                id="pbkdf2-dec-rounds"
-                value="100000"
+                id="pbkdf2-dec-rounds-input"
+                value="600000"
                 min="0"
                 step="100000"
                 placeholder="Rounds"
+                required
               />
             </div>
           </div>
@@ -163,9 +159,9 @@
             Decrypt
           </button>
           <div>
-            <label for="pbkdf2-dec-output">Decrypted output</label>
+            <label for="pbkdf2-dec-display">Decrypted output</label>
             <textarea
-              id="pbkdf2-dec-output"
+              id="pbkdf2-dec-display"
               name="data"
               class="h-16 w-full"
               readonly

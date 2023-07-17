@@ -1,8 +1,7 @@
 import "./index.css";
 
 import "./sha_256_form";
-import "./pbkdf2_enc";
-import { test_encryption } from "./encryption_test";
+import "./pbkdf2";
 
 const app = document.querySelector("#app");
 
@@ -20,6 +19,4 @@ document.addEventListener("DOMContentLoaded", () => {
       <h1 class="text-2xl font-medium">Web Crypto Tests 🔐</h1>
     `;
   }
-
-  test_encryption();
 });
