@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Crypto Tests</title>
+  </head>
+  <body class="mx-auto min-h-[100dvh] max-w-2xl py-4">
+    <div id="app" class="border-b pb-2"></div>
+    <!-- SHA256 Hash Form -->
+    <form id="sha256-hasher" class="flex flex-col gap-2 border-b py-3.5">
+      <h2 class="pb-1 text-xl">SHA256 Hasher</h2>
+      <div>
+        <label for="sha256-input">Input</label>
+        <textarea
+          id="sha256-input"
+          name="sha256-input"
+          class="h-12 w-full"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+      >
+        Hash
+      </button>
+      <div>
+        <label for="sha256-output">Output</label>
+        <textarea
+          id="sha256-output"
+          name="sha256-output"
+          class="h-12 w-full"
+          readonly
+        ></textarea>
+      </div>
+    </form>
+    <!-- PBKDF Encryption Form -->
+    <form class="border-b py-3.5">
+      <h2 class="pb-1 text-xl">PBKDK2 Encryption</h2>
+    </form>
+    <!-- PBKDF Decryption Form -->
+    <form class="border-b py-3.5">
+      <h2 class="pb-1 text-xl">PBKDK2 Decryption</h2>
+    </form>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
