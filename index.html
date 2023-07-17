@@ -6,43 +6,178 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Crypto Tests</title>
   </head>
-  <body class="mx-auto min-h-[100dvh] max-w-2xl py-4">
-    <div id="app" class="border-b pb-2"></div>
-    <!-- SHA256 Hash Form -->
-    <form id="sha256-hasher" class="flex flex-col gap-2 border-b py-3.5">
-      <h2 class="pb-1 text-xl">SHA256 Hasher</h2>
-      <div>
-        <label for="sha256-input">Input</label>
-        <textarea
-          id="sha256-input"
-          name="sha256-input"
-          class="h-12 w-full"
-        ></textarea>
-      </div>
-      <button
-        type="submit"
-        class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-      >
-        Hash
-      </button>
-      <div>
-        <label for="sha256-output">Output</label>
-        <textarea
-          id="sha256-output"
-          name="sha256-output"
-          class="h-12 w-full"
-          readonly
-        ></textarea>
-      </div>
-    </form>
-    <!-- PBKDF Encryption Form -->
-    <form class="border-b py-3.5">
-      <h2 class="pb-1 text-xl">PBKDK2 Encryption</h2>
-    </form>
-    <!-- PBKDF Decryption Form -->
-    <form class="border-b py-3.5">
-      <h2 class="pb-1 text-xl">PBKDK2 Decryption</h2>
-    </form>
+  <body class="mx-auto min-h-[100dvh] w-full max-w-7xl px-2 py-4">
+    <div id="app" class="pb-2"></div>
+
+    <div class="grid grid-cols-1 divide-y sm:grid-cols-2 sm:gap-4">
+      <!-- SHA256 Hash Form -->
+      <section class="py-3.5">
+        <h2 class="pb-2 text-xl">SHA256 Hasher</h2>
+        <form id="sha256-hasher" class="flex flex-col gap-2">
+          <div>
+            <label for="sha256-input">Input</label>
+            <textarea
+              id="sha256-input"
+              name="sha256-input"
+              class="h-16 w-full"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            Hash
+          </button>
+          <div>
+            <label for="sha256-output">Output</label>
+            <textarea
+              id="sha256-output"
+              name="sha256-output"
+              class="h-16 w-full"
+              readonly
+            ></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- PBKDF Encryption Form -->
+      <section class="py-3.5">
+        <h2 class="pb-2 text-xl">PBKDK2 Encryption</h2>
+        <form id="pbkdf2-enc" class="flex flex-col gap-2">
+          <!-- <span class="">Success!</span> -->
+          <div
+            id="pbkdf2-enc-info"
+            class="items-center rounded-lg bg-blue-200 px-3 py-2 text-sm font-medium leading-4 text-blue-800"
+            style="display: none"
+          >
+            <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v5h-2v-5zm0-3h2v2h-2V6z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span id="pbkdf2-enc-message">Information</span>
+          </div>
+          <div class="flex gap-2">
+            <div class="flex w-full flex-col">
+              <label for="pbkdf2-enc-password">Enc. Password</label>
+              <input
+                type="text"
+                name="password"
+                id="pbkdf2-enc-password"
+                value=""
+                placeholder="Password"
+              />
+            </div>
+            <div class="flex w-full flex-col">
+              <label for="pbkdf2-enc-rounds">Rounds</label>
+              <input
+                type="number"
+                name="rounds"
+                id="pbkdf2-enc-rounds"
+                value="100"
+                min="0"
+                step="10"
+                placeholder="Rounds"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="pbkdf2-enc-data">Raw data</label>
+            <textarea
+              id="pbkdf2-enc-data"
+              name="data"
+              class="h-16 w-full"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            Encrypt
+          </button>
+          <div>
+            <label for="pbkdf2-enc-output">Encrypted output</label>
+            <textarea
+              id="pbkdf2-enc-output"
+              name="data"
+              class="h-16 w-full"
+              readonly
+            ></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- PBKDF Decryption Form -->
+      <section class="py-3.5">
+        <h2 class="pb-2 text-xl">PBKDK2 Decryption</h2>
+        <form id="pbkdf2-dec" class="flex flex-col gap-2">
+          <div
+            id="pbkdf2-dec-info"
+            class="items-center rounded-lg bg-blue-200 px-3 py-2 text-sm font-medium leading-4 text-blue-800"
+            style="display: none"
+          >
+            <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9h2v5h-2v-5zm0-3h2v2h-2V6z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span id="pbkdf2-dec-message">Information</span>
+          </div>
+          <div>
+            <label for="pbkdf2-dec-data">Encrypted input</label>
+            <textarea
+              id="pbkdf2-dec-data"
+              name="data"
+              class="h-12 w-full"
+            ></textarea>
+          </div>
+          <div class="flex gap-2">
+            <div class="flex w-full flex-col">
+              <label for="pbkdf2-dec-password">Dec. Password</label>
+              <input
+                type="text"
+                name="password"
+                id="pbkdf2-dec-password"
+                value=""
+                placeholder="Password"
+              />
+            </div>
+            <div class="flex w-full flex-col">
+              <label for="pbkdf2-dec-rounds">Rounds</label>
+              <input
+                type="number"
+                name="rounds"
+                id="pbkdf2-dec-rounds"
+                value="100"
+                min="0"
+                step="10"
+                placeholder="Rounds"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            Decrypt
+          </button>
+          <div>
+            <label for="pbkdf2-dec-output">Decrypted output</label>
+            <textarea
+              id="pbkdf2-dec-output"
+              name="data"
+              class="h-16 w-full"
+              readonly
+            ></textarea>
+          </div>
+        </form>
+      </section>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
