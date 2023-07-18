@@ -13,5 +13,5 @@ export const MakeBlobSchema = z.object({
 
 export type MakeBlob = z.infer<typeof MakeBlobSchema>;
 
-export const StoreSchema = z.array(z.object({ c: z.string(), s: z.string() }));
+export const StoreSchema = z.object({ c: z.string(), s: z.string() });
 export type Store = z.infer<typeof StoreSchema>;

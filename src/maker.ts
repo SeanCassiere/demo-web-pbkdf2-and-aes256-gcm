@@ -7,7 +7,7 @@ const storeParentNode = document.querySelector(
   "#maker-store-parent"
 ) as HTMLDivElement;
 const storeNode = document.querySelector("#maker-store") as HTMLPreElement;
-let storeParent: Store = [];
+let storeParent: Store | null = null;
 
 function writeStoreToDOM() {
   storeNode.innerHTML = JSON.stringify(storeParent, null, 2);
@@ -42,7 +42,7 @@ const rawStoreNode = document.querySelector(
 const rawStoreCounterNode = document.querySelector(
   "#maker-raw-store-counter"
 ) as HTMLSpanElement;
-let rawStore: string[] = [];
+let rawStore: string = "";
 
 function writeRawStoreToDOM() {
   rawStoreNode.innerHTML = JSON.stringify(rawStore, null, 2);
@@ -97,20 +97,15 @@ form.addEventListener("submit", async (evt) => {
   const iterations = parseInt(form.iterations.value) ?? 1e6;
   const plaintext = form.plaintext.value;
 
-  form.password.disabled = true;
-  form.iterations.disabled = true;
-
   const passwordHash = await sha256(password);
   const encrypted = await encrypt({ password, iterations }, plaintext);
 
-  rawStore.push(plaintext);
-  storeParent.push({ c: encrypted.ciphertext, s: encrypted.salt });
+  rawStore = plaintext;
+  storeParent = { c: encrypted.ciphertext, s: encrypted.salt };
 
   rawStoreParentNode.style.display = "block";
   storeParentNode.style.display = "block";
   outputParentNode.style.display = "block";
-
-  submitButtonNode.disabled = false;
 
   writeStoreToDOM();
   writeRawStoreToDOM();
@@ -122,14 +117,12 @@ form.addEventListener("submit", async (evt) => {
     store_encode_steps: ["base64", "json_stringify"],
     store_encryption_type: "aes_256_gcm_using_pbkdf2",
   });
+  submitButtonNode.disabled = false;
 });
 
 form.addEventListener("reset", () => {
-  form.password.disabled = false;
-  form.iterations.disabled = false;
-
-  storeParent = [];
-  rawStore = [];
+  storeParent = null;
+  rawStore = "";
 
   writeStoreToDOM();
   writeOutputToDOM({
@@ -140,46 +133,4 @@ form.addEventListener("reset", () => {
   storeParentNode.style.display = "none";
   rawStoreParentNode.style.display = "none";
   outputParentNode.style.display = "none";
-});
-
-const loopItemsButtonNode = document.querySelector(
-  "#maker-loop-items"
-) as HTMLButtonElement;
-
-loopItemsButtonNode.addEventListener("click", async () => {
-  submitButtonNode.disabled = true;
-  loopItemsButtonNode.disabled = true;
-  form.password.disabled = true;
-  form.iterations.disabled = true;
-
-  const password = form.password.value;
-  const iterations = parseInt(form.iterations.value) ?? 1e6;
-  const plaintext = form.plaintext.value;
-
-  const passwordHash = await sha256(password);
-
-  for (let idx = 0; idx < 200; idx++) {
-    let encrypted = await encrypt({ password, iterations }, plaintext);
-    console.log("looped encryption count: ", idx);
-    rawStore.push(plaintext);
-    storeParent.push({ c: encrypted.ciphertext, s: encrypted.salt });
-  }
-
-  rawStoreParentNode.style.display = "block";
-  storeParentNode.style.display = "block";
-  outputParentNode.style.display = "block";
-
-  submitButtonNode.disabled = false;
-  loopItemsButtonNode.disabled = false;
-
-  writeStoreToDOM();
-  writeRawStoreToDOM();
-  writeOutputToDOM({
-    p_hash: passwordHash,
-    p_hash_type: "sha256",
-    pbkdf_iterations: iterations,
-    store: btoa(JSON.stringify(storeParent)),
-    store_encode_steps: ["base64", "json_stringify"],
-    store_encryption_type: "aes_256_gcm_using_pbkdf2",
-  });
 });
