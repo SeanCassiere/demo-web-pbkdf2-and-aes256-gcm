@@ -28,7 +28,7 @@ outputCopyNode.addEventListener("click", () => {
 });
 
 function writeOutputToDOM(obj: MakeBlob) {
-  outputNode.innerHTML = btoa(JSON.stringify(obj));
+  outputNode.innerHTML = JSON.stringify(obj);
   return;
 }
 
@@ -39,14 +39,10 @@ const rawStoreParentNode = document.querySelector(
 const rawStoreNode = document.querySelector(
   "#maker-raw-store"
 ) as HTMLPreElement;
-const rawStoreCounterNode = document.querySelector(
-  "#maker-raw-store-counter"
-) as HTMLSpanElement;
 let rawStore: string = "";
 
 function writeRawStoreToDOM() {
   rawStoreNode.innerHTML = JSON.stringify(rawStore, null, 2);
-  rawStoreCounterNode.innerHTML = `${rawStore.length.toString()} items`;
   return;
 }
 

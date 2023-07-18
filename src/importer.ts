@@ -14,21 +14,17 @@ async function decryptStore(
     pbkdf_iterations: MakeBlob["pbkdf_iterations"];
   },
   password: string
-): Promise<string[]> {
+): Promise<string> {
   switch (meta.encryption_type) {
     case "aes_256_gcm_using_pbkdf2": {
-      const aes256GcmUsingPbkdf2Results: string[] = [];
-
-      for (let idx = 0; idx < store.length; idx++) {
-        const { c, s } = store[idx];
-        const decrypted = await decrypt(
-          { iterations: meta.pbkdf_iterations, salt: s, ciphertext: c },
-          password
-        );
-        aes256GcmUsingPbkdf2Results.push(decrypted);
-      }
-
-      return aes256GcmUsingPbkdf2Results;
+      return await decrypt(
+        {
+          iterations: meta.pbkdf_iterations,
+          salt: store.s,
+          ciphertext: store.c,
+        },
+        password
+      );
     }
     default: {
       throw new Error(
@@ -90,7 +86,7 @@ async function checkPasswords(candidatePassword: string, blob: MakeBlob) {
 async function rehydrateBlob(password: string, blob: string) {
   let parsedInitialBase64: object | null = null;
   try {
-    parsedInitialBase64 = JSON.parse(window.atob(blob));
+    parsedInitialBase64 = JSON.parse(blob);
   } catch (error) {
     throw new Error("invalid blob");
   }
@@ -128,9 +124,6 @@ const resultNodeParent = document.querySelector(
   "#import-result-parent"
 ) as HTMLDivElement;
 const resultNode = document.querySelector("#import-result") as HTMLPreElement;
-const resultCounterNode = document.querySelector(
-  "#import-result-counter"
-) as HTMLSpanElement;
 const resultTimeNode = document.querySelector(
   "#import-result-time"
 ) as HTMLSpanElement;
@@ -159,13 +152,11 @@ form.addEventListener("submit", async (evt) => {
     console.log(`Decryption took ${seconds} seconds`);
 
     resultNode.textContent = JSON.stringify(result, null, 2);
-    resultCounterNode.textContent = `${result.length.toString()} items - `;
     resultTimeNode.textContent = `${seconds.toString()} seconds`;
     resultNodeParent.style.display = "block";
   } catch (error) {
     if (error instanceof Error) {
       alert("Error: " + error.message);
-      return;
     } else {
       alert("Unknown error occurred, check the console.");
       console.error("Error", error);
