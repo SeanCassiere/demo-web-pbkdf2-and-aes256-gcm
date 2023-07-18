@@ -29,7 +29,7 @@ export async function keysFromPassword(
   let keys = await crypto.subtle.deriveBits(
     params,
     basekey,
-    256 /* key */ + 128 /* iv */
+    256 /* 256bit key => 32 bytes */ + 128 /* 128bit iv => 16bytes */
   );
 
   let iv = new Uint8Array(keys.slice(32));
