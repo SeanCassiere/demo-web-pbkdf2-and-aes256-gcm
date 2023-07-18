@@ -9,20 +9,31 @@
   <body class="mx-auto min-h-[100dvh] w-full max-w-7xl px-2 py-4">
     <div id="app" class="pb-2"></div>
 
-    <main class="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 sm:divide-x">
-      <section class="px-3.5 py-3.5">
+    <main
+      class="grid grid-cols-1 gap-4 divide-y sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+    >
+      <section class="px-3.5 py-3.5 sm:px-1">
         <h2 class="pb-2 text-xl">Maker</h2>
         <form id="maker-form" class="flex flex-col gap-2">
           <div class="grid grid-cols-2 gap-2">
             <div class="flex flex-col">
-              <label for="maker-password">Password</label>
+              <div class="flex gap-2">
+                <label for="maker-password">Password</label>
+                <button
+                  id="maker-password-copy"
+                  type="button"
+                  class="text-xs text-red-500"
+                >
+                  Copy
+                </button>
+              </div>
               <input
                 type="text"
                 id="maker-password"
                 name="password"
                 value="@Password1"
                 placeholder="eg: any password"
-                class="disabled:cursor-not-allowed disabled:bg-slate-200"
+                class="flex-1 text-sm disabled:cursor-not-allowed disabled:bg-slate-200"
                 required
               />
             </div>
@@ -34,8 +45,9 @@
                 min="100000"
                 name="iterations"
                 value="600000"
+                step="100000"
                 placeholder="eg: 600,000"
-                class="disabled:cursor-not-allowed disabled:bg-slate-200"
+                class="text-sm disabled:cursor-not-allowed disabled:bg-slate-200"
                 required
               />
             </div>
@@ -45,19 +57,27 @@
 
             <textarea
               id="maker-plaintext"
-              class="h-16 w-full"
+              class="h-16 w-full text-sm"
               name="plaintext"
               required
             >
-{"foo":"bar","items":["1",2]}</textarea
+Hello world</textarea
             >
           </div>
-          <div>
+          <div class="flex flex-wrap gap-1">
             <button
               type="submit"
-              class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+              id="maker-submit"
             >
               Append data
+            </button>
+            <button
+              type="button"
+              class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+              id="maker-loop-items"
+            >
+              Loop data 200 times
             </button>
             <button
               type="reset"
@@ -84,15 +104,38 @@
             </code>
           </div>
           <div
-            class="break-before-all border p-1 text-xs"
+            class="break-all border p-1 text-xs"
+            id="maker-raw-store-parent"
+            style="display: none"
+          >
+            <div class="pb-2">
+              <span>Raw Store -&nbsp;</span>
+              <span id="maker-raw-store-counter">0</span>
+            </div>
+            <code>
+              <pre
+                id="maker-raw-store"
+                class="max-h-32 overflow-y-auto overflow-x-scroll"
+              >
+[]</pre
+              >
+            </code>
+          </div>
+          <div
+            class="break-all border p-1 text-xs"
             id="maker-store-parent"
             style="display: none"
           >
             <div class="pb-2">
-              <span>Store</span>
+              <span>Store Encrypted</span>
             </div>
             <code>
-              <pre id="maker-store" class="overflow-x-scroll">[]</pre>
+              <pre
+                id="maker-store"
+                class="max-h-32 overflow-y-auto overflow-x-scroll"
+              >
+[]</pre
+              >
             </code>
           </div>
         </form>
@@ -100,7 +143,71 @@
 
       <section class="px-3.5 py-3.5">
         <h2 class="pb-2 text-xl">Importer</h2>
-        <form></form>
+        <form id="import-form" class="flex flex-col gap-2">
+          <div>
+            <label for="import-blob">Blob</label>
+            <textarea
+              id="import-blob"
+              class="h-36 w-full text-sm"
+              name="blob"
+              required
+              placeholder="paste the blob here"
+            ></textarea>
+          </div>
+          <div class="flex flex-col">
+            <label for="import-password">Password</label>
+            <input
+              type="text"
+              id="import-password"
+              name="password"
+              value=""
+              placeholder="password used on the blob"
+              class="text-sm disabled:cursor-not-allowed disabled:bg-slate-200"
+              required
+            />
+          </div>
+          <div class="flex gap-1">
+            <button
+              id="import-submit"
+              type="submit"
+              class="rounded bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-700 disabled:cursor-not-allowed disabled:bg-orange-300"
+            >
+              Decrypt blob
+            </button>
+            <button
+              type="reset"
+              class="rounded bg-slate-500 px-4 py-2 font-bold text-white hover:bg-slate-700"
+            >
+              Clear
+            </button>
+          </div>
+          <div
+            id="import-result-parent"
+            class="break-all border p-1 text-xs"
+            style="display: none"
+          >
+            <div class="flex justify-between pb-2">
+              <div>
+                <span>Decrypted result -&nbsp;</span>
+                <span id="import-result-counter">0</span>
+                <span id="import-result-time">0s</span>
+              </div>
+              <button
+                type="button"
+                id="import-result-copy"
+                class="text-red-500"
+              >
+                Copy
+              </button>
+            </div>
+            <code>
+              <pre
+                id="import-result"
+                class="max-h-32 overflow-y-auto overflow-x-scroll"
+              ></pre>
+            </code>
+          </div>
+        </form>
       </section>
     </main>
     <script type="module" src="/src/main.ts"></script>

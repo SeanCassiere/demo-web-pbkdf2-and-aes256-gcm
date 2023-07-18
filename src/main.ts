@@ -1,7 +1,7 @@
 import "./index.css";
 
-// import "./pbkdf2";
 import "./maker";
+import "./importer";
 
 const app = document.querySelector("#app");
 
