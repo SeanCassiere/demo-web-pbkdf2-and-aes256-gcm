@@ -1,1 +1,3 @@
-[https://gist.github.com/ayosec/d4dc24fb8f0965703c023f92b8e9cdf3](https://gist.github.com/ayosec/d4dc24fb8f0965703c023f92b8e9cdf3)
+# Demo using PBKFD2 + AES256-GCM
+
+This is a demo of using PBKDF2 to derive a key from a password, and then using that key to encrypt and decrypt data using AES256-GCM.
