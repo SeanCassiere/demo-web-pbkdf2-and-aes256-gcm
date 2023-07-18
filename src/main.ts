@@ -1,7 +1,7 @@
 import "./index.css";
 
-import "./sha_256_form";
-import "./pbkdf2";
+// import "./pbkdf2";
+import "./maker";
 
 const app = document.querySelector("#app");
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   } else {
     app.innerHTML = `
-      <h1 class="text-2xl font-medium">Web Crypto Tests 🔐</h1>
+      <h1 class="text-2xl font-medium">🔐 PBKDF2 + AES256-GCM Stores</h1>
     `;
   }
 });
